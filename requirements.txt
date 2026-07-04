@@ -9,4 +9,4 @@ opencv-python-headless
 plotly
 requests
 python-multipart
-pillow
+Pillow
