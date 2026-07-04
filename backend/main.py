@@ -6,13 +6,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import uvicorn
-from backend.utils import (
+from utils import (
     analyze_text_sentiment,
     analyze_image_heuristics,
     analyze_video_heuristics,
     call_gemini_api
 )
-
 app = FastAPI(title="Multimodal Sentiment Analysis Backend API", version="1.0.0")
 
 # Enable CORS for frontend integration
