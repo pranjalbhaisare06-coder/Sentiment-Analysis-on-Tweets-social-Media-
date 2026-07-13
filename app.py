@@ -123,44 +123,15 @@ def inject_custom_css():
         </style>
     """, unsafe_allow_html=True)
 
-# Helper: Check if backend port is open
-def is_backend_online(port=8000):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        return s.connect_ex(('127.0.0.1', port)) == 0
-
 # Helper: Automatically start the backend server
 @st.cache_resource
 def start_backend_server():
-    if not is_backend_online(8000):
-        backend_dir = os.path.dirname(os.path.abspath(__file__))
-        cmd = [sys.executable, "-m", "uvicorn", "backend.main:app", "--host", "127.0.0.1", "--port", "8000"]
-        # Start backend as background subprocess
-        process = subprocess.Popen(
-            cmd,
-            cwd=backend_dir,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        # Give server 1.5 seconds to bind to port
-        time.sleep(1.5)
-        return True, process
     return False, None
-
-# Initialize Backend
-started, proc = start_backend_server()
 
 # Sidebar Setup
 st.sidebar.markdown("<h2 class='gradient-text'>⚡ SENTIRA SETTINGS</h2>", unsafe_allow_html=True)
 
-# API status indicator
-backend_online = is_backend_online(8000)
-if backend_online:
-    st.sidebar.success("🟢 API Server: Online (Port 8000)")
-else:
-    st.sidebar.error("🔴 API Server: Offline (Starting...)")
-    # Trigger retry
-    st.rerun()
-
+st.sidebar.success("🟢 Render API Connected")
 st.sidebar.markdown("---")
 
 # Gemini API Key setup
